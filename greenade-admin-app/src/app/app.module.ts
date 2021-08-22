@@ -7,7 +7,10 @@ import { LoginComponent } from './login/login.component';
 import { ItemViewComponent } from './item-view/item-view.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from './Services/auth.service';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 @NgModule({
   declarations: [
     AppComponent,
@@ -18,7 +21,11 @@ import { AuthService } from './Services/auth.service';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    MatInputModule,
+    MatIconModule,
+    MatButtonModule
   ],
   providers: [
     AuthService

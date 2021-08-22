@@ -1,24 +1,31 @@
 <div class="container">
     <form [formGroup]="loginForm">
-        <div class="row mx-auto" style="width: 600px; margin-top: 200px;">
+        <div class="row mx-auto" style="max-width: 500px; margin-top: 200px;">
             <div *ngIf="isloginFailed" class="alert alert-danger alert-dismissible fade show" role="alert">
                 <strong>Login failed!</strong> You should check in on some of those fields below.
                 <button type="button" class="btn-close" (click)="isloginFailed = false"></button>
             </div>
             <h1>Login to Greenade as Admin</h1>
-            <div class="form-group">
-                <label for="">Username</label>
-                <input type="text" class="form-control" formControlName="name" name="" id="" aria-describedby="helpId"
-                    placeholder="">
-                <small id="helpId" class="form-text text-muted">Help text</small>
-            </div>
-            <div class="form-group">
-                <label for="">Password</label>
-                <input type="password" class="form-control" formControlName="pass" name="" id=""
-                    aria-describedby="helpId" placeholder="">
-                <small id="helpId" class="form-text text-muted">Help text</small>
-            </div>
-            <button type="button" class="btn btn-primary" (click)="login()">Login</button>
+
+            <mat-form-field class="example-form-field" appearance="outline">
+                <mat-label>User name</mat-label>
+                <input matInput type="text" formControlName="name">
+                <button style="border: 0px;" *ngIf="loginForm.get('name').value" matSuffix mat-icon-button
+                    aria-label="Clear" (click)="loginForm.get('name').reset()">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </mat-form-field>
+            <mat-form-field class="example-form-field" appearance="outline">
+                <mat-label>Password</mat-label>
+                <input matInput type="password" formControlName="pass">
+                <button style="border: 0px;" *ngIf="loginForm.get('pass').value" matSuffix mat-icon-button
+                    aria-label="Clear" (click)="loginForm.get('pass').reset()">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </mat-form-field>
+
+            <button style="width: 150px;" class="ms-auto me-5" mat-raised-button color="primary"
+                (click)="login()">Login</button>
         </div>
     </form>
 </div>
