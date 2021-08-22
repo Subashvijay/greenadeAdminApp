@@ -1,5 +1,63 @@
 <div class="container mt-5">
     <button type="button" class="btn btn-primary" (click)="logOut()">Logout</button>
+    <button type="button" class="btn btn-warning" (click)="openNewItemForm()">Create New Item</button>
+    <form *ngIf="isCreateNew" [formGroup]="productForm" class="col-12 row">
+        <div class="form-group col-6">
+            <label for="">productName:</label>
+            <input type="text" formControlName="productName" class="form-control" placeholder="">
+        </div>
+
+        <div class="form-group col-6">
+            <label for="">category:</label>
+            <input type="text" formControlName="category" class="form-control" placeholder="">
+        </div>
+        <div class="row">
+            <div class="form-group col-6 col-md-4">
+                <label for="">pricePerQuantity:</label>
+                <input (blur)="setFinalPrice()" type="number" formControlName="pricePerQuantity" class="form-control"
+                    placeholder="">
+            </div>
+            <div class="form-group summa col-6 col-md-4">
+                <label for="">discountInPercent:</label>
+                <div style="position: relative;">
+                    <input (blur)="setFinalPrice()" type="number" formControlName="discountInPercent"
+                        class="form-control" placeholder="">
+                    <div class="percent">
+                        <p>%</p>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group col-6 col-md-4">
+                <label for="">finalPricePerQty:</label>
+                <input type="number" disabled="true" formControlName="finalPricePerQty" class="form-control"
+                    placeholder="">
+            </div>
+        </div>
+
+        <div class="form-group col-6">
+            <label for="">quantityType:</label>
+            <select class="form-control" formControlName="quantityType">
+                <option value="Kg">Kg</option>
+                <option value="gram">gram</option>
+                <option value="Liter">Liter</option>
+            </select>
+        </div>
+        <div class="form-group col-6">
+            <label for="">imgUrl:</label>
+            <input type="text" formControlName="imgUrl" class="form-control" placeholder="">
+        </div>
+        <div class="form-group col-6">
+            <label for="">availableQty:</label>
+            <input type="number" formControlName="availableQty" class="form-control" placeholder="">
+        </div>
+        <div class="row mt-3">
+            <button (click)="onCreateNewItem()" type="button" class="btn btn-primary col-6 ">Submit</button>
+
+            <button (click)="onCancel()" type="button" class="btn btn-danger col-6">Cancel</button>
+        </div>
+
+
+    </form>
     <div class="container">
         <div class="col-12 row">
             <div *ngFor="let item of productList" class="row d-flex col-12 col-sm-6 border">
@@ -17,7 +75,7 @@
                     <img src={{item.imgUrl}} style="height: 70px;width: 70px;"
                         class="img-fluid ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}"
                         alt="">
-                    <button (click)="editeProductId = item.productID" type="button"
+                    <button (click)="editItem(item.productID)" type="button"
                         class="btn btn-secondary col-5">Edit</button>
 
                     <!-- Edit -->
@@ -34,8 +92,8 @@
                         <div class="row">
                             <div class="form-group col-6 col-md-4">
                                 <label for="">pricePerQuantity:</label>
-                                <input type="number" formControlName="pricePerQuantity" class="form-control"
-                                    placeholder="">
+                                <input (blur)="setFinalPrice()" type="number" formControlName="pricePerQuantity"
+                                    class="form-control" placeholder="">
                             </div>
                             <div class="form-group summa col-6 col-md-4">
                                 <label for="">discountInPercent:</label>
@@ -50,7 +108,7 @@
                             <div class="form-group col-6 col-md-4">
                                 <label for="">finalPricePerQty:</label>
                                 <input type="number" formControlName="finalPricePerQty" class="form-control"
-                                    placeholder="">
+                                    placeholder="" disabled="true">
                             </div>
                         </div>
 
@@ -73,8 +131,7 @@
                         <div class="row mt-3">
                             <button (click)="onSubmit()" type="button" class="btn btn-primary col-6 ">Submit</button>
 
-                            <button (click)="editeProductId = ''" type="button"
-                                class="btn btn-danger col-6">Cancel</button>
+                            <button (click)="onCancel()" type="button" class="btn btn-danger col-6">Cancel</button>
                         </div>
 
 

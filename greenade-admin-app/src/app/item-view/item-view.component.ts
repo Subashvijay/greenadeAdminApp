@@ -11,6 +11,7 @@ import { AuthService } from '../Services/auth.service';
 export class ItemViewComponent implements OnInit {
   editeProductId: string;
   productForm: FormGroup;
+  isCreateNew = false;
   productList: ProductItems[] = [
     {
       productID: '1',
@@ -55,7 +56,7 @@ export class ItemViewComponent implements OnInit {
     this.productForm = new FormGroup({
       productID: new FormControl(''),
       productName: new FormControl('', Validators.required),
-      pricePerQuantity: new FormControl('', Validators.required),
+      pricePerQuantity: new FormControl('', [Validators.required, Validators.min(1)]),
       category: new FormControl('', Validators.required),
       discountInPercent: new FormControl('', Validators.required),
       finalPricePerQty: new FormControl('', Validators.required),
@@ -86,4 +87,31 @@ export class ItemViewComponent implements OnInit {
 
     this.productForm.get('finalPricePerQty').setValue(v - (v * (+d / 100)));
   }
+
+  editItem(productId) {
+    this.editeProductId = productId;
+    let item = this.productList.find(x => x.productID === productId);
+    this.productForm.setValue(item)
+  }
+
+  openNewItemForm() {
+    this.productForm.reset();
+    this.isCreateNew = true;
+  }
+
+  onCreateNewItem() {
+    if (this.productForm.valid) {
+      this.productList.push(this.productForm.getRawValue());
+      this.isCreateNew = false;
+    } else {
+      this.productForm.markAllAsTouched();
+    }
+  }
+
+  onCancel() {
+    this.productForm.reset();
+    this.isCreateNew = false;
+    this.editeProductId = '';
+  }
 }
+
