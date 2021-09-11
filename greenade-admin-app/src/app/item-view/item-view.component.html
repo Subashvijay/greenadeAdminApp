@@ -50,6 +50,10 @@
             <label for="">availableQty:</label>
             <input type="number" formControlName="availableQty" class="form-control" placeholder="">
         </div>
+        <div class="form-group col-6">
+            <label for="">minimumQuantityType:</label>
+            <input type="number" formControlName="minimumQuantity" class="form-control" placeholder="">
+        </div>
         <div class="row mt-3">
             <button (click)="onCreateNewItem()" type="button" class="btn btn-primary col-6 ">Submit</button>
 
@@ -62,9 +66,12 @@
         <div class="col-12 row">
             <div *ngFor="let item of productList" class="row d-flex col-12 col-sm-6 border">
 
-                <div class="col-7">
+                <div class="col-12">
+                    <img src={{item.imgUrl}} style="height: 100px;width: 100px;"
+                        class="img-fluid ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}"
+                        alt="">
                     <h1>productName:{{item.productName}}</h1>
-                    <h2>productID:{{item.productID}}</h2>
+                    <h2>productID:{{item.id}}</h2>
                     <div class="row d-flex justify-content-space">
                         <p>category:{{item.category}}</p>
                         <p>availableQty:{{item.availableQty}}</p>
@@ -73,16 +80,17 @@
                     <p>discountInPercent:{{item.discountInPercent}}</p>
                     <p>finalPricePerQty:{{item.finalPricePerQty}}</p>
                     <p>quantityType:{{item.quantityType}}</p>
-                    <button (click)="editItem(item.productID)" type="button"
-                        class="btn btn-secondary ms-auto col-3">Edit</button>
+                    <p>minimumQuantityType:{{item.minimumQuantity}}</p>
+                    <button (click)="editItem(item.id)" type="button"
+                        class="btn btn-secondary ms-auto me-3 col-3">Edit</button>
+                    <button (click)="deleteProduct(item.id)" type="button"
+                        class="btn btn-danger ms-auto  col-3">Delete</button>
                 </div>
-                <div class="col-3">
-                    <img src={{item.imgUrl}} style="height: 100px;width: 100px;"
-                        class="img-fluid ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}"
-                        alt="">
-                </div>
+
+
+
                 <!-- Edit -->
-                <div *ngIf="editeProductId === item.productID" [formGroup]="productForm" class="col-12 row">
+                <div *ngIf="editeProductId === item.id" [formGroup]="productForm" class="col-12 row">
                     <div class="form-group col-6">
                         <label for="">productName:</label>
                         <input type="text" formControlName="productName" class="form-control" placeholder="">
@@ -131,8 +139,12 @@
                         <label for="">availableQty:</label>
                         <input type="number" formControlName="availableQty" class="form-control" placeholder="">
                     </div>
+                    <div class="form-group col-6">
+                        <label for="">minimumQuantityType:</label>
+                        <input type="number" formControlName="minimumQuantity" class="form-control" placeholder="">
+                    </div>
                     <div class="row mt-3">
-                        <button (click)="onSubmit()" type="button" class="btn btn-primary col-6 ">Submit</button>
+                        <button (click)="onEdit()" type="button" class="btn btn-primary col-6 ">Submit</button>
 
                         <button (click)="onCancel()" type="button" class="btn btn-danger col-6">Cancel</button>
                     </div>
